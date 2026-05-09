@@ -54,7 +54,7 @@ async function sendMessage() {
 
       body: JSON.stringify({
 
-        model: "openrouter/free",
+        model: "inclusionai/ring-2.6-1t:free",
 
         messages: [
 
