@@ -1,30 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ashwek AI Assistant</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ashwek AI Assistant</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="container">
-<div class="sidebar">
-<h1>ASHWEK</h1>
-<p>Your AI Assistant</p>
-</div>
 
-<div class="main">
-<h2>Ashwek — Your AI Assistant</h2>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
 
-<div id="chat-box" class="chat-box">
-<div class="bot-message">👋 Hey there! I'm Ashwek, your AI Assistant.</div>
-</div>
+<div class="app">
 
-<div class="input-area">
-<input id="user-input" placeholder="Ask anything..." />
-<button onclick="sendMessage()">Send</button>
-</div>
-</div>
+  <aside class="sidebar">
+
+    <div>
+      <h1>ASHWEK AI</h1>
+      <p>Your futuristic AI assistant</p>
+    </div>
+
+    <div class="menu-card">
+      <div class="menu-item">⚡ Real AI Responses</div>
+      <div class="menu-item">🌌 Cyberpunk Interface</div>
+      <div class="menu-item">🎤 Voice Assistant</div>
+      <div class="menu-item">🧠 Powered by GPT</div>
+    </div>
+
+    <button class="new-chat-btn">+ New Chat</button>
+
+    <div class="bottom-text">
+      Ashwek AI v2.0
+    </div>
+
+  </aside>
+
+  <main class="main-chat">
+
+    <div class="topbar">
+
+      <div>
+        <h2>Ashwek AI Assistant</h2>
+        <span>Online • Neural Interface Active</span>
+      </div>
+
+      <div class="orb"></div>
+
+    </div>
+
+    <div id="chat-box" class="chat-box">
+
+      <div class="message bot-message">
+
+        <div class="avatar bot-avatar">🤖</div>
+
+        <div class="bubble">
+          Hi! I am Ashwek 👋 How can I help you today?
+        </div>
+
+      </div>
+
+    </div>
+
+    <div id="typing" class="typing hidden">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <div class="input-area">
+
+      <input
+        type="text"
+        id="user-input"
+        placeholder="Message Ashwek AI..."
+      />
+
+      <button class="voice-btn" onclick="startVoice()">🎤</button>
+
+      <button class="send-btn" onclick="sendMessage()">➤</button>
+
+    </div>
+
+  </main>
+
 </div>
 
 <script src="script.js"></script>
