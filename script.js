@@ -59,19 +59,13 @@ async function sendMessage() {
         messages: [
 
           {
-
             role: "system",
-
             content: "You are Ashwek AI Assistant, a futuristic helpful AI chatbot."
-
           },
 
           {
-
             role: "user",
-
             content: message
-
           }
 
         ]
@@ -89,11 +83,8 @@ async function sendMessage() {
     if (data.error) {
 
       addMessage(
-
         "⚠️ " + data.error.message,
-
         "bot-message"
-
       );
 
       return;
@@ -102,21 +93,15 @@ async function sendMessage() {
     if (data.choices && data.choices.length > 0) {
 
       addMessage(
-
         data.choices[0].message.content,
-
         "bot-message"
-
       );
 
     } else {
 
       addMessage(
-
-        "⚠️ No response received from AI.",
-
+        "⚠️ No AI response received.",
         "bot-message"
-
       );
 
     }
@@ -128,11 +113,8 @@ async function sendMessage() {
     thinking.remove();
 
     addMessage(
-
       "⚠️ Error connecting to OpenRouter API.",
-
       "bot-message"
-
     );
 
   }
@@ -152,7 +134,7 @@ function startVoice() {
 
   if (!('webkitSpeechRecognition' in window)) {
 
-    alert('Voice recognition not supported in this browser.');
+    alert("Voice recognition not supported in this browser.");
 
     return;
 
@@ -160,7 +142,7 @@ function startVoice() {
 
   const recognition = new webkitSpeechRecognition();
 
-  recognition.lang = 'en-US';
+  recognition.lang = "en-US";
 
   recognition.onresult = function(event) {
 
