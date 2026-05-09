@@ -54,7 +54,7 @@ async function sendMessage() {
 
       body: JSON.stringify({
 
-        model: "google/gemma-2-9b-it:free",
+        model: "openrouter/free",
 
         messages: [
 
