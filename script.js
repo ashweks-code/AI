@@ -1,16 +1,32 @@
 const chatBox = document.getElementById("chat-box");
 const userInput = document.getElementById("user-input");
+const typing = document.getElementById("typing");
 
-function addMessage(message, className) {
+function createMessage(message, sender) {
 
-  const div = document.createElement("div");
+  const messageDiv = document.createElement("div");
+  messageDiv.classList.add("message");
 
-  div.className = className;
+  if (sender === "user") {
 
-  div.innerHTML = message;
+    messageDiv.classList.add("user-message");
 
-  chatBox.appendChild(div);
+    messageDiv.innerHTML = `
+      <div class="bubble">${message}</div>
+      <div class="avatar user-avatar">🧑</div>
+    `;
 
+  } else {
+
+    messageDiv.classList.add("bot-message");
+
+    messageDiv.innerHTML = `
+      <div class="avatar bot-avatar">🤖</div>
+      <div class="bubble">${message}</div>
+    `;
+  }
+
+  chatBox.appendChild(messageDiv);
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
@@ -20,19 +36,11 @@ async function sendMessage() {
 
   if (!message) return;
 
-  addMessage(message, "user-message");
+  createMessage(message, "user");
 
   userInput.value = "";
 
-  const thinking = document.createElement("div");
-
-  thinking.className = "bot-message";
-
-  thinking.innerHTML = "⚡ Thinking...";
-
-  chatBox.appendChild(thinking);
-
-  chatBox.scrollTop = chatBox.scrollHeight;
+  typing.classList.remove("hidden");
 
   try {
 
@@ -41,15 +49,10 @@ async function sendMessage() {
       method: "POST",
 
       headers: {
-
         "Authorization": "Bearer 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",
-
         "Content-Type": "application/json",
-
         "HTTP-Referer": window.location.href,
-
         "X-Title": "Ashwek AI Assistant"
-
       },
 
       body: JSON.stringify({
@@ -57,87 +60,50 @@ async function sendMessage() {
         model: "inclusionai/ring-2.6-1t:free",
 
         messages: [
-
           {
             role: "system",
-            content: "You are Ashwek AI Assistant, a futuristic helpful AI chatbot."
+            content: "You are Ashwek AI Assistant. If user says hi, introduce yourself as Ashwek."
           },
-
           {
             role: "user",
             content: message
           }
-
         ]
-
       })
-
     });
 
     const data = await response.json();
 
-    console.log(data);
-
-    thinking.remove();
+    typing.classList.add("hidden");
 
     if (data.error) {
-
-      addMessage(
-        "⚠️ " + data.error.message,
-        "bot-message"
-      );
-
+      createMessage("⚠️ " + data.error.message, "bot");
       return;
     }
 
-    if (data.choices && data.choices.length > 0) {
-
-      addMessage(
-        data.choices[0].message.content,
-        "bot-message"
-      );
-
-    } else {
-
-      addMessage(
-        "⚠️ No AI response received.",
-        "bot-message"
-      );
-
-    }
+    createMessage(data.choices[0].message.content, "bot");
 
   } catch (error) {
 
+    typing.classList.add("hidden");
+
+    createMessage("⚠️ Error connecting to AI.", "bot");
+
     console.error(error);
-
-    thinking.remove();
-
-    addMessage(
-      "⚠️ Error connecting to OpenRouter API.",
-      "bot-message"
-    );
-
   }
 }
 
 userInput.addEventListener("keypress", function(event) {
-
   if (event.key === "Enter") {
-
     sendMessage();
-
   }
-
 });
 
 function startVoice() {
 
-  if (!('webkitSpeechRecognition' in window)) {
-
-    alert("Voice recognition not supported in this browser.");
-
+  if (!("webkitSpeechRecognition" in window)) {
+    alert("Voice recognition not supported.");
     return;
-
   }
 
   const recognition = new webkitSpeechRecognition();
@@ -145,9 +111,7 @@ function startVoice() {
   recognition.lang = "en-US";
 
   recognition.onresult = function(event) {
-
     userInput.value = event.results[0][0].transcript;
-
   };
 
   recognition.start();
